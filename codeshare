@@ -1,0 +1,44 @@
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import OneHotEncoder
+num_transformer = Pipeline([
+    ('num_imputer', SimpleImputer(strategy='median'))
+    ])
+
+char_transformer = Pipeline([
+    ('char_imputer', SimpleImputer(strategy='most_frequent')),
+    ('OHE',OneHotEncoder(handle_unknown='error',drop='first', sparse =False)),
+    ])
+
+OHE_transformer = OneHotEncoder(handle_unknown='error',drop='first', sparse =False)
+
+
+from sklearn.preprocessing import OneHotEncoder
+OH_encoder = OneHotEncoder(handle_unknown='error',drop='first', sparse=False)
+OH_cols_train = pd.DataFrame(OH_encoder.fit_transform(df_train[final_char_feat_names]))
+OH_col_names = OH_encoder.get_feature_names(final_char_feat_names)
+OH_col_names
+
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("cat", char2num_transformer, char2num_feat_names),
+         ("num", num_transformer, final_num_feat_names),
+         ("char", char_transformer, final_char_feat_names),
+    ]
+)
+
+
+prepfit = preprocessor.fit(df_train)
+#df_preprocessed = pd.DataFrame(prepfit.transform(df_train))
+new_col_names = [*char2num_feat_names,*final_num_feat_names,*list(OH_col_names)]
+data = prepfit.transform(df_train)
+print(final_char_feat_names)
+print(OH_col_names)
+print(data.shape)
+print(len(new_col_names))
+mydf = pd.DataFrame(data)
+mydf.columns = new_col_names
+
+print(df_train[char2num_feat_names])
+mydf.info()
