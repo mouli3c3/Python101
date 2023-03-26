@@ -169,3 +169,41 @@ High Correlation Columns  Correlation
 ```
 
 This means that the columns 'A' and 'B' have a correlation > 0.7 and the average correlation between the two columns is 0.91.
+
+
+To create multiple models with a permutation of 10 variables in SageMaker using scikit-learn, you can follow these steps:
+
+1. Import the necessary libraries.
+2. Create a list of variables.
+3. Create a list of models.
+4. For each model, train it on the shuffled data.
+5. Evaluate each model on the test data.
+
+Here is an example of how to do this:
+
+```
+import sagemaker
+from sagemaker.sklearn import SKLearnModel
+
+# Create a list of variables
+variables = ["x1", "x2", "x3", "x4", "x5", "x6", "x7", "x8", "x9", "x10"]
+
+# Create a list of models
+models = []
+for variable in variables:
+    model = SKLearnModel()
+    model.fit(x_train, y_train)
+    models.append(model)
+
+# For each model, train it on the shuffled data
+for model in models:
+    model.fit(shuffled_x_train, shuffled_y_train)
+
+# Evaluate each model on the test data
+for model in models:
+    y_pred = model.predict(test_x)
+    accuracy = accuracy_score(y_pred, test_y)
+    print(f"Model {model.name} has an accuracy of {accuracy}")
+```
+
+This will create 10 models, each of which is trained on a different permutation of the data. The accuracy of each model will be printed to the console.
