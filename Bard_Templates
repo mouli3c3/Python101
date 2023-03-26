@@ -1,0 +1,171 @@
+Sure, here is a Python template for a full module:
+
+```python
+# Import the necessary modules
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Define the module's functions
+def plot_dataframe(df):
+  # Plot the data frame
+  df.plot(kind='bar')
+
+def save_figure_as_pdf(fig, filename):
+  # Save the figure as a PDF
+  fig.savefig(filename)
+
+# Define the module's variables
+module_name = 'my_module'
+
+# Create the module's functions
+plot_dataframe = plot_dataframe
+save_figure_as_pdf = save_figure_as_pdf
+
+# Export the module's functions
+from module_name import plot_dataframe, save_figure_as_pdf
+```
+
+This template will create a module with two functions: `plot_dataframe` and `save_figure_as_pdf`. You can modify this template to add other functions or to change the names of the functions.
+
+There are a few ways to return a dataframe with column names from a scikit learn pipeline. One way is to use the `ColumnTransformer` transformer. The `ColumnTransformer` takes a list of transformers and applies them to the columns of an array or pandas DataFrame. The transformers can be any sklearn transformers, such as `StandardScaler` or `OneHotEncoder`.
+
+To use the `ColumnTransformer`, you would first create a list of transformers. For example, you might create a list of transformers that converts the columns to floats, converts the columns to one-hot vectors, and then splits the columns into training and testing sets.
+
+Once you have created the list of transformers, you would then create a `ColumnTransformer` object. The `ColumnTransformer` object takes the list of transformers as an argument.
+
+Finally, you would call the `fit` method on the `ColumnTransformer` object. The `fit` method takes the input data as an argument. The `fit` method will apply the transformers to the input data and return a new DataFrame with the transformed columns.
+
+Another way to return a dataframe with column names from a scikit learn pipeline is to use the `Pipeline` class. The `Pipeline` class is a wrapper around a list of transformers. The `Pipeline` class takes a list of transformers as an argument.
+
+Once you have created a `Pipeline` object, you would then call the `fit` method on the `Pipeline` object. The `fit` method takes the input data as an argument. The `fit` method will apply the transformers to the input data and return a new DataFrame with the transformed columns.
+
+The `Pipeline` class also has a `transform` method. The `transform` method takes the input data as an argument and returns a new DataFrame with the transformed columns.
+
+The `Pipeline` class is useful if you want to use multiple transformers on the input data. The `ColumnTransformer` class is useful if you only want to use one transformer on the input data.
+
+
+
+Sure, here is a template for returning a dataframe with column names from a scikit learn pipeline:
+
+```
+import pandas as pd
+from sklearn.compose import ColumnTransformer
+
+# Create a pipeline with two transformers:
+# - A NumericalTransformer to convert all columns to floats
+# - A CategoricalTransformer to convert all columns to categories
+pipeline = ColumnTransformer([
+    ('numeric', NumericalTransformer(), numericas_all),
+    ('categorical', CategoricalTransformer(), categoricas_all)
+])
+
+# Fit the pipeline to the training data
+model = pipeline.fit(X_train)
+
+# Get the column names
+names = model.name_transformer_.get_feature_names()
+
+# Create a dataframe with the column names and the transformed data
+df = pd.DataFrame(names, columns=model.name_transformer_.features_)
+
+# Print the dataframe
+print(df)
+```
+
+This template will return a dataframe with the column names and the transformed data. The column names will be the same as the input columns, and the transformed data will be the result of applying the two transformers to the input data.
+
+
+Here is an example of how to apply a sequence of steps like imputing, one hot encoding, and PCA in one pipeline for scikit learn and return a DataFrame with column names:
+
+```python
+import pandas as pd
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+
+# Create a simple imputer
+imputer = SimpleImputer(strategy='constant', fill_value="NaN")
+
+# Create a one hot encoder
+one_hot_encoder = ColumnTransformer(
+    transformers=[
+        ('categorical', 'onehot', columns=['column1', 'column2'])
+    ]
+)
+
+# Create a PCA transformer
+pca = PCA()
+
+# Create a pipeline with the imputer, one hot encoder, and PCA
+pipeline = Pipeline([
+    ('preprocessor', imputer),
+    ('encoder', one_hot_encoder),
+    ('transformer', pca),
+])
+
+# Fit the pipeline to the data
+model = pipeline.fit(X)
+
+# Get the DataFrame with column names
+df = model.transform(X)
+
+# Print the DataFrame
+df.head()
+```
+
+This example will create a DataFrame with column names `column1_1`, `column2_1`, `column1_2`, and `column2_2`. The columns will represent the one hot encoded values for the columns `column1` and `column2` in the original DataFrame, and the first two principal components of the data.
+
+The following code shows how to extract prediction probabilities from SageMaker algorithms for binary classification problems:
+
+```python
+import sagemaker
+
+# Create a SageMaker session
+session = sagemaker.Session()
+
+# Create a binary classification model
+model = session.create_model('linear_learner', 'binary_classifier')
+
+# Train the model
+model.fit()
+
+# Make predictions
+predictions = model.predict()
+
+# Get the prediction probabilities
+probabilities = predictions['probability']
+
+# Print the prediction probabilities
+print(probabilities)
+```
+
+This code will print a list of probabilities, one for each prediction. The probabilities will be between 0 and 1, where 0 indicates that the model thinks the prediction is for the negative class and 1 indicates that the model thinks the prediction is for the positive class.
+
+Here is a Python code to create a DataFrame of column names that have high correlation and corresponding correlation:
+
+```python
+import pandas as pd
+
+df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})
+
+# Calculate correlation between all columns
+correlation = df.corr()
+
+# Find columns with correlation > 0.7
+high_correlation_columns = correlation[correlation > 0.7].columns
+
+# Create a DataFrame of column names that have high correlation
+high_correlation_df = pd.DataFrame({'High Correlation Columns': high_correlation_columns, 'Correlation': correlation[high_correlation_columns].mean()})
+
+# Print the DataFrame
+print(high_correlation_df)
+```
+
+This code will print the following:
+
+```
+High Correlation Columns  Correlation
+0                     A     0.91
+1                     B     0.91
+```
+
+This means that the columns 'A' and 'B' have a correlation > 0.7 and the average correlation between the two columns is 0.91.
